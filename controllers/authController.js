@@ -1,6 +1,15 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, 'username'); // Only return usernames
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+};
+
 exports.register = async (req, res) => {
   const { username, password } = req.body;
   try {
